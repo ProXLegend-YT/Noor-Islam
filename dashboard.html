@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Dashboard — Streak, Bookmarks &amp; Badges | Noor Islam</title>
+<meta name="description" content="Your personal Noor Islam dashboard: daily streak, bookmarked ayahs and hadith, quiz scores, reading history and achievement badges.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e4d3b">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="hero" style="padding:70px 0 50px;">
+  <div class="container text-center">
+    <span class="eyebrow" style="justify-content:center;color:var(--gold-300)">Your Progress</span>
+    <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px);">Dashboard</h1>
+    <p class="hero-sub">Everything you've built here, in one place.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:30px;">
+  <div class="container">
+    <div class="grid grid-4" id="stat-cards" style="margin-bottom:40px;"></div>
+
+    <div class="grid grid-2" style="align-items:flex-start;margin-bottom:40px;">
+      <div class="card reveal">
+        <h3>📖 Reading History</h3>
+        <div id="reading-history"></div>
+      </div>
+      <div class="card reveal">
+        <h3>⭐ Bookmarked Ayahs</h3>
+        <div id="bookmarked-ayahs" style="max-height:280px;overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <div class="card reveal" style="margin-bottom:40px;">
+      <h3>🏅 Achievement Badges</h3>
+      <div class="grid grid-4" id="badges-grid"></div>
+    </div>
+
+    <div class="card reveal text-center" style="max-width:400px;margin:0 auto;">
+      <h4>Reset Your Data</h4>
+      <p style="font-size:13.5px;">This clears your streak, bookmarks, scores and preferences from this browser. This cannot be undone.</p>
+      <button class="btn btn-outline btn-block" id="reset-all">Reset All Local Data</button>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
