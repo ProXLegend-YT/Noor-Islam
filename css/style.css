@@ -345,6 +345,57 @@ input,select,textarea{font-family:inherit;}
 .surah-player .progress{flex:1;min-width:120px;background:rgba(255,255,255,.15);}
 .surah-time{font-size:12px;color:rgba(253,248,234,.75);white-space:nowrap;}
 
+/* ---------- Streak badge ---------- */
+.streak-badge{
+  display:inline-flex;align-items:center;gap:4px;padding:8px 12px;border-radius:100px;
+  background:linear-gradient(135deg,rgba(233,120,26,.16),rgba(201,162,39,.16));
+  border:1px solid rgba(233,120,26,.35);font-weight:800;font-size:13px;color:#c9701a;
+}
+[data-theme="dark"] .streak-badge{color:var(--gold-300);border-color:rgba(232,205,111,.35);}
+.streak-badge b{font-size:14px;}
+
+/* ---------- Mobile bottom navigation ---------- */
+.bottom-nav{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:180;
+  background:var(--surface-glass);backdrop-filter:blur(18px) saturate(140%);
+  border-top:1px solid var(--border);padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+  justify-content:space-around;align-items:center;
+}
+.bottom-nav a{
+  display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 10px;border-radius:14px;
+  font-size:10.5px;font-weight:700;color:var(--text-muted);transition:.2s;
+}
+.bottom-nav a span{font-size:19px;}
+.bottom-nav a.active{color:var(--accent-strong);background:rgba(201,162,39,.12);}
+@media (max-width:860px){
+  .bottom-nav{display:flex;}
+  body{padding-bottom:66px;}
+  .to-top{bottom:78px;}
+}
+
+/* ---------- Hero floating particles ---------- */
+.hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1;}
+.particle-star{
+  position:absolute;width:5px;height:5px;background:var(--gold-300);border-radius:50%;
+  opacity:.6;animation:particleFloat 8s ease-in-out infinite;box-shadow:0 0 8px 1px rgba(232,205,111,.6);
+}
+@keyframes particleFloat{
+  0%,100%{transform:translateY(0) scale(1);opacity:.3;}
+  50%{transform:translateY(-30px) scale(1.4);opacity:.85;}
+}
+
+/* ---------- Page fade-in ---------- */
+body{animation:pageFade .5s ease both;}
+@keyframes pageFade{from{opacity:0;}to{opacity:1;}}
+
+/* ---------- Notification prompt banner ---------- */
+.notify-banner{
+  display:flex;align-items:center;gap:14px;padding:16px 20px;border-radius:var(--radius-md);
+  background:linear-gradient(135deg,rgba(201,162,39,.12),rgba(23,114,89,.1));border:1px solid var(--border);
+  margin-bottom:24px;flex-wrap:wrap;
+}
+.notify-banner p{margin:0;flex:1;min-width:200px;font-size:14px;}
+
 /* responsive */
 @media (max-width:1024px){
   .grid-4{grid-template-columns:repeat(2,1fr);}
