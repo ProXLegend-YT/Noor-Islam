@@ -238,11 +238,11 @@ input,select,textarea{font-family:inherit;}
 .field label{display:block;font-weight:700;font-size:13.5px;margin-bottom:8px;color:var(--text);}
 .field input,.field select,.field textarea{
   width:100%;padding:13px 16px;border-radius:12px;border:1px solid var(--border);
-  background:var(--surface);color:var(--text);font-size:15px;transition:border-color .2s;
+  background:var(--surface);color:var(--text);font-size:16px;transition:border-color .2s;
 }
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(201,162,39,.15);}
 .search-bar{position:relative;}
-.search-bar input{padding-left:46px;}
+.search-bar input{padding-left:46px;font-size:16px;}
 .search-bar svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.5;}
 
 /* ---------- Tabs / filters ---------- */
@@ -318,6 +318,32 @@ input,select,textarea{font-family:inherit;}
   box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:.3s;z-index:150;border:none;
 }
 .to-top.show{opacity:1;pointer-events:auto;}
+
+/* ---------- Reader layout (Quran / two-column pages) ---------- */
+.reader-layout{display:grid;grid-template-columns:340px 1fr;gap:30px;align-items:flex-start;}
+.reader-sidebar{position:sticky;top:calc(var(--header-h) + 20px);max-height:78vh;display:flex;flex-direction:column;}
+.ayah-actions{display:flex;gap:8px;flex-wrap:wrap;}
+@media (max-width:900px){
+  .reader-layout{grid-template-columns:1fr;}
+  .reader-sidebar{position:relative;top:0;max-height:340px;}
+}
+@media (max-width:480px){
+  .ayah-actions .icon-btn{width:34px;height:34px;font-size:14px;}
+  #reader-title{font-size:19px;}
+}
+
+/* full-surah audio player */
+.surah-player{
+  display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--radius-md);
+  background:linear-gradient(135deg,var(--emerald-900),var(--emerald-950));color:#fdf8ea;margin-bottom:24px;flex-wrap:wrap;
+}
+.surah-player select{background:rgba(255,255,255,.08);border:1px solid rgba(232,205,111,.3);color:#fff;border-radius:100px;padding:8px 14px;font-size:13px;font-weight:700;}
+.surah-play-btn{
+  width:52px;height:52px;border-radius:50%;border:none;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold-400),var(--gold-600));color:#241a05;font-size:18px;font-weight:800;
+}
+.surah-player .progress{flex:1;min-width:120px;background:rgba(255,255,255,.15);}
+.surah-time{font-size:12px;color:rgba(253,248,234,.75);white-space:nowrap;}
 
 /* responsive */
 @media (max-width:1024px){
