@@ -1,8 +1,8 @@
 /* Noor Islam — Service Worker */
-const CACHE = "noor-islam-v1";
+const CACHE = "noor-islam-v2";
 const CORE_ASSETS = [
   "index.html","quran.html","prayer-times.html","hadith.html","library.html",
-  "videos.html","tools.html","quiz.html","community.html","donate.html","contact.html",
+  "videos.html","games.html","tools.html","quiz.html","community.html","donate.html","contact.html",
   "offline.html","css/style.css","js/main.js",
   "data/surahs.js","data/names.js","data/hadiths.js","data/content.js"
 ];
