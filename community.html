@@ -17,8 +17,8 @@
 <section class="hero" style="padding:70px 0 50px;">
   <div class="container text-center">
     <span class="eyebrow" style="justify-content:center;color:var(--gold-300)">Ummah</span>
-    <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px);">Community &amp; Q&amp;A</h1>
-    <p class="hero-sub">Ask, share and reflect together. Be kind — this space represents the Ummah.</p>
+    <h1 class="hero-title" id="community-hero-title" style="font-size:clamp(28px,4vw,44px);">Community &amp; Q&amp;A</h1>
+    <p class="hero-sub" id="community-hero-sub">Ask, share and reflect together. Be kind — this space represents the Ummah.</p>
   </div>
 </section>
 
@@ -27,17 +27,26 @@
     <div class="grid" style="grid-template-columns:1fr 300px;gap:30px;align-items:flex-start;">
 
       <div>
+        <div class="flex justify-between items-center reveal" style="margin-bottom:18px;">
+          <span class="chip chip-gold" id="lang-label">Community Language</span>
+          <select id="lang-select" style="padding:10px 16px;border-radius:100px;border:1px solid var(--border);background:var(--surface);font-weight:700;font-size:13.5px;">
+            <option value="en">English</option>
+            <option value="ur">اردو (Urdu)</option>
+            <option value="ar">العربية (Arabic)</option>
+          </select>
+        </div>
+
         <!-- Profile / sign-in -->
         <div class="card reveal" id="profile-card" style="margin-bottom:24px;"></div>
 
         <!-- New post -->
         <div class="card reveal" style="margin-bottom:30px;">
-          <h4>Start a discussion</h4>
+          <h4 id="lbl-start">Start a discussion</h4>
           <div class="field"><input type="text" id="post-title" placeholder="Title — e.g. How do I keep consistency in Tahajjud?"></div>
           <div class="field"><textarea id="post-body" rows="3" placeholder="Share more detail…"></textarea></div>
           <div class="flex justify-between items-center">
             <select id="post-cat" style="padding:10px 14px;border-radius:100px;border:1px solid var(--border);background:var(--surface);">
-              <option>General Discussion</option><option>Islamic Q&amp;A</option><option>Reflections</option><option>Announcements</option>
+              <option id="opt-general">General Discussion</option><option id="opt-qa">Islamic Q&amp;A</option><option id="opt-reflect">Reflections</option><option id="opt-announce">Announcements</option>
             </select>
             <button class="btn btn-primary" id="post-submit">Post</button>
           </div>
@@ -48,14 +57,14 @@
       </div>
 
       <aside class="card reveal">
-        <h4>Community Guidelines</h4>
-        <ul style="font-size:13.5px;color:var(--text-muted);line-height:1.8;list-style:disc;padding-left:18px;">
+        <h4 id="lbl-guidelines">Community Guidelines</h4>
+        <ul id="guidelines-list" style="font-size:13.5px;color:var(--text-muted);line-height:1.8;list-style:disc;padding-left:18px;">
           <li>Speak with kindness and good manners (adab).</li>
           <li>No personal attacks, hate speech or spam.</li>
           <li>Cite sources when answering fiqh questions.</li>
           <li>Report content that breaks these guidelines.</li>
         </ul>
-        <button class="btn btn-outline btn-block btn-sm" onclick="toast('Report received — a moderator will review this content.')">🚩 Report content</button>
+        <button class="btn btn-outline btn-block btn-sm" id="report-btn" onclick="toast('Report received — a moderator will review this content.')">🚩 Report content</button>
       </aside>
     </div>
   </div>
