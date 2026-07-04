@@ -7,6 +7,7 @@ const NAV_LINKS = [
   {href:"hadith.html",label:"Hadith"},
   {href:"library.html",label:"Library"},
   {href:"videos.html",label:"Videos"},
+  {href:"games.html",label:"Games"},
   {href:"tools.html",label:"Tools"},
   {href:"quiz.html",label:"Quiz"},
   {href:"community.html",label:"Community"},
@@ -112,7 +113,7 @@ function renderFooter(){
 }
 
 function initTheme(){
-  const saved = localStorage.getItem("noor-theme") || "light";
+  const saved = localStorage.getItem("noor-theme") || "dark";
   document.documentElement.setAttribute("data-theme", saved);
   const btn = document.getElementById("theme-toggle");
   if(btn) btn.textContent = saved === "dark" ? "☀️" : "🌙";

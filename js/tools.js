@@ -90,6 +90,31 @@
     }
   });
 
+  // ---- Islamic Events Calendar ----
+  const EVENTS = [
+    {name:"Mawlid al-Nabi ﷺ", date:"2026-08-25", desc:"Commemoration of the birth of Prophet Muhammad ﷺ."},
+    {name:"Isra and Mi'raj", date:"2027-01-05", desc:"The Prophet's ﷺ night journey and ascension."},
+    {name:"Ramadan Begins", date:"2027-02-08", desc:"The month of fasting, Qur'an and spiritual renewal."},
+    {name:"Laylat al-Qadr (est. 27th night)", date:"2027-03-06", desc:"The Night of Decree, better than a thousand months."},
+    {name:"Eid al-Fitr", date:"2027-03-09", desc:"Celebration marking the end of Ramadan."},
+    {name:"Day of Arafah", date:"2027-05-15", desc:"The most blessed day of the year; fasting is highly recommended for non-pilgrims."},
+    {name:"Eid al-Adha", date:"2027-05-16", desc:"The Festival of Sacrifice, honouring Prophet Ibrahim (AS)."},
+    {name:"Islamic New Year 1449", date:"2027-06-06", desc:"The beginning of the new Hijri year."},
+  ];
+  function renderEvents(){
+    const now = Date.now();
+    document.getElementById("events-grid").innerHTML = EVENTS.map(e=>{
+      const days = Math.ceil((new Date(e.date) - now) / 86400000);
+      return `<div class="card reveal in">
+        <span class="chip chip-gold">${days > 0 ? days + " days away" : "Recently passed"}</span>
+        <h4 style="margin-top:10px;">${e.name}</h4>
+        <p style="font-size:14px;">${e.desc}</p>
+        <p style="font-size:12px;color:var(--text-muted);margin:0;">${new Date(e.date).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"})} · dates are estimated, subject to moon sighting</p>
+      </div>`;
+    }).join("");
+  }
+  renderEvents();
+
   // ---- Hijri date converter ----
   document.getElementById("d-convert").addEventListener("click", async ()=>{
     const input = document.getElementById("d-input").value;

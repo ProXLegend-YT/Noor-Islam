@@ -6,6 +6,7 @@
     {id:"islamic history", label:"Islamic History", icon:"🏛️"},
     {id:"islamic motivation reminder", label:"Islamic Motivation", icon:"✨"},
     {id:"nasheed", label:"Nasheeds", icon:"🎵"},
+    {id:"naat sharif urdu", label:"Naats", icon:"🌹"},
     {id:"islamic shorts", label:"Islamic Shorts", icon:"🎬"},
   ];
   let active = CATS[0].id;
