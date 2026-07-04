@@ -396,6 +396,34 @@ body{animation:pageFade .5s ease both;}
 }
 .notify-banner p{margin:0;flex:1;min-width:200px;font-size:14px;}
 
+/* ---------- Quick search overlay ---------- */
+.search-overlay{
+  position:fixed;inset:0;z-index:500;background:rgba(6,40,33,.55);backdrop-filter:blur(4px);
+  display:flex;align-items:flex-start;justify-content:center;padding:10vh 20px;
+  opacity:0;pointer-events:none;transition:opacity .25s ease;
+}
+.search-overlay.open{opacity:1;pointer-events:auto;}
+.search-modal{
+  width:100%;max-width:560px;background:var(--surface);border-radius:var(--radius-md);
+  box-shadow:0 30px 80px rgba(0,0,0,.4);overflow:hidden;border:1px solid var(--border);
+}
+.search-modal .search-bar input{padding:20px 20px 20px 46px;border:none;border-bottom:1px solid var(--border);border-radius:0;font-size:16px;}
+.search-modal .search-bar svg{left:20px;}
+#quick-search-results{max-height:60vh;overflow-y:auto;padding:8px;}
+.qs-group{padding:10px 12px 4px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);}
+.qs-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;transition:.15s;}
+.qs-item:hover{background:var(--bg-alt);}
+.qs-item b{font-size:14px;}
+.qs-item small{color:var(--text-muted);}
+
+/* ---------- Install app floating button ---------- */
+.install-fab{
+  position:fixed;left:50%;bottom:88px;transform:translateX(-50%);z-index:150;
+  padding:12px 22px;border-radius:100px;border:none;font-weight:800;font-size:13.5px;
+  background:linear-gradient(135deg,var(--gold-400),var(--gold-600));color:#241a05;box-shadow:var(--shadow-md);
+}
+@media (min-width:861px){ .install-fab{bottom:26px;} }
+
 /* responsive */
 @media (max-width:1024px){
   .grid-4{grid-template-columns:repeat(2,1fr);}
