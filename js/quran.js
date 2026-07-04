@@ -43,6 +43,45 @@
     saveBookmarks(b);
   }
 
+  // ---- Full-Surah audio player ----
+  const surahAudio = document.getElementById("surah-audio");
+  const surahPlayBtn = document.getElementById("surah-play-btn");
+  const surahPlayerBox = document.getElementById("surah-player");
+  const reciterSelect = document.getElementById("reciter-select");
+  const savedReciter = localStorage.getItem("noor-reciter");
+  if(savedReciter) reciterSelect.value = savedReciter;
+  let currentSurahNum = null;
+
+  function fmtTime(s){
+    if(!isFinite(s)) return "00:00";
+    const m = Math.floor(s/60), sec = Math.floor(s%60);
+    return `${String(m).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+  }
+  function loadSurahAudio(n){
+    currentSurahNum = n;
+    const edition = reciterSelect.value;
+    surahAudio.src = `https://cdn.islamic.network/quran/audio-surah/128/${edition}/${n}.mp3`;
+    surahPlayBtn.textContent = "▶";
+    document.getElementById("surah-progress").style.width = "0%";
+    document.getElementById("surah-time").textContent = "00:00 / 00:00";
+    surahPlayerBox.style.display = "flex";
+  }
+  surahPlayBtn.addEventListener("click", ()=>{
+    document.querySelectorAll(".ayah-audio").forEach(a=>a.pause());
+    if(surahAudio.paused){ surahAudio.play().catch(()=>toast("Couldn't start audio — check your connection")); surahPlayBtn.textContent = "❚❚"; }
+    else { surahAudio.pause(); surahPlayBtn.textContent = "▶"; }
+  });
+  surahAudio.addEventListener("timeupdate", ()=>{
+    const pct = surahAudio.duration ? (surahAudio.currentTime/surahAudio.duration)*100 : 0;
+    document.getElementById("surah-progress").style.width = pct + "%";
+    document.getElementById("surah-time").textContent = `${fmtTime(surahAudio.currentTime)} / ${fmtTime(surahAudio.duration)}`;
+  });
+  surahAudio.addEventListener("ended", ()=> surahPlayBtn.textContent = "▶");
+  reciterSelect.addEventListener("change", ()=>{
+    localStorage.setItem("noor-reciter", reciterSelect.value);
+    if(currentSurahNum){ const wasPlaying = !surahAudio.paused; loadSurahAudio(currentSurahNum); if(wasPlaying){ surahAudio.play(); surahPlayBtn.textContent="❚❚"; } }
+  });
+
   async function loadSurah(n){
     const meta = SURAHS.find(s=>s.n===n);
     titleEl.textContent = `${n}. ${meta.trans} — ${meta.mean}`;
@@ -50,6 +89,8 @@
     bismillahEl.style.display = (n !== 1 && n !== 9) ? "block" : "none";
     ayahBox.innerHTML = `<div class="text-center" style="padding:60px 0;"><span class="star8 spin"></span><p style="margin-top:14px;">Loading Surah ${meta.trans}…</p></div>`;
     localStorage.setItem("noor-last-read", JSON.stringify({n, name:meta.trans}));
+    surahAudio.pause();
+    loadSurahAudio(n);
 
     const lang = translationSelect.value;
     try{
@@ -70,9 +111,9 @@
       const bm = isBookmarked(surahNum, a.numberInSurah);
       return `
       <div class="card reveal in" style="margin-bottom:16px;" data-ayah="${a.numberInSurah}">
-        <div class="flex justify-between items-center" style="margin-bottom:14px;">
+        <div class="flex justify-between items-center" style="margin-bottom:14px;flex-wrap:wrap;gap:8px;">
           <span class="chip chip-gold">Ayah ${a.numberInSurah}</span>
-          <div class="flex gap-8">
+          <div class="ayah-actions">
             <button class="icon-btn play-btn" title="Play audio" style="width:36px;height:36px;">▶</button>
             <button class="icon-btn bm-btn" title="Bookmark" style="width:36px;height:36px;${bm?'color:var(--accent-strong);border-color:var(--accent)':''}">★</button>
             <button class="icon-btn copy-btn" title="Copy" style="width:36px;height:36px;">⧉</button>
@@ -90,6 +131,9 @@
       const audioEl = card.querySelector(".ayah-audio");
       card.querySelector(".play-btn").addEventListener("click", (e)=>{
         document.querySelectorAll(".ayah-audio").forEach(a=>{ if(a!==audioEl) a.pause(); });
+        const surahAudioEl = document.getElementById("surah-audio");
+        surahAudioEl.pause();
+        document.getElementById("surah-play-btn").textContent = "▶";
         if(audioEl.paused){ audioEl.play(); e.target.textContent="❚❚"; }
         else { audioEl.pause(); e.target.textContent="▶"; }
       });
