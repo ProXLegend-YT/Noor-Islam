@@ -3,6 +3,44 @@
   const PKEY = "noor-profile";
   const TKEY = "noor-threads";
 
+  // ---- Language selector (i18n) ----
+  const I18N = {
+    en:{heroTitle:"Community & Q&A", heroSub:"Ask, share and reflect together. Be kind — this space represents the Ummah.",
+        start:"Start a discussion", general:"General Discussion", qa:"Islamic Q&A", reflect:"Reflections", announce:"Announcements",
+        post:"Post", guidelines:"Community Guidelines", report:"🚩 Report content",
+        titlePh:"Title — e.g. How do I keep consistency in Tahajjud?", bodyPh:"Share more detail…"},
+    ur:{heroTitle:"کمیونٹی اور سوال و جواب", heroSub:"ملکر سوال پوچھیں، بانٹیں اور غور کریں۔ نرمی سے پیش آئیں — یہ جگہ امت کی نمائندگی کرتی ہے۔",
+        start:"گفتگو شروع کریں", general:"عمومی گفتگو", qa:"اسلامی سوال و جواب", reflect:"غور و فکر", announce:"اعلانات",
+        post:"پوسٹ کریں", guidelines:"کمیونٹی رہنما اصول", report:"🚩 رپورٹ کریں",
+        titlePh:"عنوان — مثلاً تہجد میں تسلسل کیسے رکھیں؟", bodyPh:"مزید تفصیل شامل کریں…"},
+    ar:{heroTitle:"المجتمع والأسئلة", heroSub:"اسأل وشارك وتأمل معًا. كن لطيفًا — فهذا المكان يمثل الأمة.",
+        start:"ابدأ نقاشًا", general:"نقاش عام", qa:"أسئلة إسلامية", reflect:"تأملات", announce:"إعلانات",
+        post:"انشر", guidelines:"إرشادات المجتمع", report:"🚩 الإبلاغ عن المحتوى",
+        titlePh:"العنوان — مثال: كيف أحافظ على قيام الليل؟", bodyPh:"شارك المزيد من التفاصيل…"}
+  };
+  function applyLang(lang){
+    const t = I18N[lang] || I18N.en;
+    document.getElementById("community-hero-title").textContent = t.heroTitle;
+    document.getElementById("community-hero-sub").textContent = t.heroSub;
+    document.getElementById("lbl-start").textContent = t.start;
+    document.getElementById("opt-general").textContent = t.general;
+    document.getElementById("opt-qa").textContent = t.qa;
+    document.getElementById("opt-reflect").textContent = t.reflect;
+    document.getElementById("opt-announce").textContent = t.announce;
+    document.getElementById("post-submit").textContent = t.post;
+    document.getElementById("lbl-guidelines").textContent = t.guidelines;
+    document.getElementById("report-btn").textContent = t.report;
+    document.getElementById("post-title").placeholder = t.titlePh;
+    document.getElementById("post-body").placeholder = t.bodyPh;
+    document.body.style.direction = (lang === "ur" || lang === "ar") ? "rtl" : "ltr";
+    localStorage.setItem("noor-community-lang", lang);
+  }
+  const langSelect = document.getElementById("lang-select");
+  const savedLang = localStorage.getItem("noor-community-lang") || "en";
+  langSelect.value = savedLang;
+  applyLang(savedLang);
+  langSelect.addEventListener("change", ()=> applyLang(langSelect.value));
+
   function getProfile(){ return JSON.parse(localStorage.getItem(PKEY) || "null"); }
   function setProfile(p){ localStorage.setItem(PKEY, JSON.stringify(p)); }
 
