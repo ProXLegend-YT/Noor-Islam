@@ -1,6 +1,21 @@
 /* Noor Islam — home page dynamic content */
 
 (function(){
+  // ---- Streak widget ----
+  const s = getStreak();
+  document.getElementById("streak-title").textContent =
+    s.count >= 2 ? `${s.count} day streak — keep it up!` : "Start your streak today";
+  document.getElementById("streak-sub").textContent =
+    s.count >= 2 ? "You've visited Noor Islam every day — masha'Allah!" : "Come back tomorrow to begin building your streak.";
+  const days = [];
+  for(let i=6;i>=0;i--){ const d=new Date(); d.setDate(d.getDate()-i); days.push(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`); }
+  document.getElementById("streak-dots").innerHTML = days.map(d=>{
+    const hit = (s.history||[]).includes(d);
+    return `<span style="width:14px;height:14px;border-radius:50%;background:${hit?'linear-gradient(135deg,var(--gold-400),var(--gold-600))':'var(--bg-alt)'};border:1px solid var(--border);display:inline-block;"></span>`;
+  }).join("");
+})();
+
+(function(){
   // ---- Verse of the day (rotates by day of year) ----
   const day = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
   const verse = VERSE_OF_DAY[day % VERSE_OF_DAY.length];

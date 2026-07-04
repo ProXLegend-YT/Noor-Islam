@@ -31,6 +31,7 @@ function renderHeader(){
         ${NAV_LINKS.map(l=>`<a href="${l.href}" class="${l.href===cur?'active':''}">${l.label}</a>`).join("")}
       </nav>
       <div class="nav-actions">
+        <span id="streak-badge-slot"></span>
         <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
         <a href="community.html" class="btn btn-gold btn-sm" style="display:none" id="login-cta">Sign in</a>
         <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -161,6 +162,100 @@ function registerSW(){
   }
 }
 
+/* ---------- Daily Streak ---------- */
+function todayKey(){ const d=new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; }
+function updateStreak(){
+  const data = JSON.parse(localStorage.getItem("noor-streak") || 'null') || {count:0, lastDate:null, history:[]};
+  const today = todayKey();
+  if(data.lastDate === today){ return data; } // already counted today
+  const y = new Date(); y.setDate(y.getDate()-1);
+  const yesterday = `${y.getFullYear()}-${y.getMonth()+1}-${y.getDate()}`;
+  data.count = (data.lastDate === yesterday) ? data.count + 1 : 1;
+  data.lastDate = today;
+  data.history = (data.history || []).concat(today).slice(-7);
+  localStorage.setItem("noor-streak", JSON.stringify(data));
+  return data;
+}
+function getStreak(){
+  return JSON.parse(localStorage.getItem("noor-streak") || 'null') || {count:0,lastDate:null,history:[]};
+}
+function renderStreakBadge(){
+  const mount = document.getElementById("streak-badge-slot");
+  if(!mount) return;
+  const s = updateStreak();
+  mount.innerHTML = `<span class="streak-badge" title="Daily streak">🔥 <b>${s.count}</b></span>`;
+}
+
+/* ---------- Notifications for prayer times ---------- */
+function notificationsEnabled(){ return localStorage.getItem("noor-notify") === "on"; }
+async function requestNotifyPermission(){
+  if(!("Notification" in window)){ toast("Notifications aren't supported on this browser"); return false; }
+  if(Notification.permission === "granted") return true;
+  const res = await Notification.requestPermission();
+  return res === "granted";
+}
+function scheduleNotification(title, body, delayMs){
+  if(delayMs <= 0 || delayMs > 24*3600*1000) return;
+  setTimeout(()=>{
+    if(Notification.permission === "granted"){
+      if(navigator.serviceWorker?.controller){
+        navigator.serviceWorker.ready.then(reg => reg.showNotification(title, {body, icon:"icons/icon.svg", badge:"icons/icon.svg"}));
+      } else {
+        new Notification(title, {body, icon:"icons/icon.svg"});
+      }
+    }
+  }, delayMs);
+}
+function schedulePrayerNotifications(timings){
+  if(!notificationsEnabled() || Notification.permission !== "granted") return;
+  const order = ["Fajr","Dhuhr","Asr","Maghrib","Isha"];
+  const now = new Date();
+  order.forEach(name=>{
+    const [h,m] = timings[name].split(":").map(Number);
+    const t = new Date(); t.setHours(h,m,0,0);
+    if(t > now){
+      scheduleNotification(`${name} — It's time to pray 🕌`, "May Allah accept your Salah.", t-now);
+    }
+  });
+}
+
+/* ---------- Mobile bottom nav ---------- */
+function renderBottomNav(){
+  if(document.getElementById("bottom-nav")) return;
+  const cur = currentPage();
+  const items = [
+    {href:"index.html", icon:"🏠", label:"Home"},
+    {href:"quran.html", icon:"📖", label:"Qur'an"},
+    {href:"prayer-times.html", icon:"🕌", label:"Prayer"},
+    {href:"tools.html", icon:"📿", label:"Tools"},
+    {href:"community.html", icon:"🤝", label:"More"},
+  ];
+  const nav = document.createElement("nav");
+  nav.id = "bottom-nav";
+  nav.className = "bottom-nav";
+  nav.innerHTML = items.map(i=>`<a href="${i.href}" class="${i.href===cur?'active':''}"><span>${i.icon}</span><small>${i.label}</small></a>`).join("");
+  document.body.appendChild(nav);
+}
+
+/* ---------- Floating pattern particles for hero sections ---------- */
+function initHeroParticles(){
+  document.querySelectorAll(".hero").forEach(hero=>{
+    if(hero.querySelector(".hero-particles")) return;
+    const wrap = document.createElement("div");
+    wrap.className = "hero-particles";
+    for(let i=0;i<10;i++){
+      const s = document.createElement("span");
+      s.className = "particle-star";
+      s.style.left = Math.random()*100+"%";
+      s.style.top = Math.random()*100+"%";
+      s.style.animationDelay = (Math.random()*6)+"s";
+      s.style.animationDuration = (6+Math.random()*6)+"s";
+      wrap.appendChild(s);
+    }
+    hero.appendChild(wrap);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", ()=>{
   renderHeader();
   renderFooter();
@@ -168,4 +263,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
   initReveal();
   initToTop();
   registerSW();
+  renderStreakBadge();
+  renderBottomNav();
+  initHeroParticles();
 });

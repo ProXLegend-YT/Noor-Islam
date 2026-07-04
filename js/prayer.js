@@ -60,6 +60,31 @@
     }
   }
 
+  // ---- Notifications ----
+  const notifyBtn = document.getElementById("notify-toggle");
+  function paintNotifyBtn(){
+    const on = notificationsEnabled() && (typeof Notification !== "undefined") && Notification.permission === "granted";
+    notifyBtn.textContent = on ? "✓ Notifications On" : "Enable Notifications";
+  }
+  paintNotifyBtn();
+  notifyBtn.addEventListener("click", async ()=>{
+    if(notificationsEnabled()){
+      localStorage.setItem("noor-notify","off");
+      paintNotifyBtn();
+      toast("Prayer notifications turned off");
+      return;
+    }
+    const granted = await requestNotifyPermission();
+    if(granted){
+      localStorage.setItem("noor-notify","on");
+      paintNotifyBtn();
+      toast("Notifications enabled — you'll be alerted at each prayer time");
+      if(timings) schedulePrayerNotifications(timings);
+    } else {
+      toast("Notification permission was not granted");
+    }
+  });
+
   async function loadToday(lat, lon, label){
     document.getElementById("location-line").textContent = `Showing accurate prayer times for ${label}`;
     try{
@@ -68,6 +93,7 @@
       timings = data.data.timings;
       renderToday(timings);
       tickCountdown();
+      schedulePrayerNotifications(timings);
     }catch(e){
       document.getElementById("location-line").textContent = "Couldn't fetch prayer times — please check your connection.";
     }
@@ -116,6 +142,17 @@
     setQiblaVisual(0);
     loadToday(lat, lon, label);
   }
+
+  document.getElementById("find-mosques").addEventListener("click", ()=>{
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        pos => window.open(`https://www.google.com/maps/search/mosques/@${pos.coords.latitude},${pos.coords.longitude},14z`, "_blank"),
+        () => window.open("https://www.google.com/maps/search/mosques+near+me", "_blank")
+      );
+    } else {
+      window.open("https://www.google.com/maps/search/mosques+near+me", "_blank");
+    }
+  });
 
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(
