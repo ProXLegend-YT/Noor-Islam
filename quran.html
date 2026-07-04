@@ -36,10 +36,10 @@
       </div>
     </div>
 
-    <div class="grid" style="grid-template-columns:340px 1fr;gap:30px;align-items:flex-start;">
+    <div class="reader-layout">
 
       <!-- Surah list -->
-      <aside class="card reveal" style="position:sticky;top:calc(var(--header-h) + 20px);max-height:78vh;display:flex;flex-direction:column;">
+      <aside class="card reveal reader-sidebar">
         <div class="search-bar" style="margin-bottom:16px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           <input type="text" id="surah-search" placeholder="Search Surah by name or number…">
@@ -61,6 +61,26 @@
             </select>
           </div>
         </div>
+
+        <!-- Full Surah audio player -->
+        <div class="surah-player" id="surah-player" style="display:none;">
+          <button class="surah-play-btn" id="surah-play-btn">▶</button>
+          <div style="flex:1;min-width:160px;">
+            <div class="flex justify-between" style="margin-bottom:6px;">
+              <b style="font-size:14px;">Full Surah Recitation</b>
+              <span class="surah-time" id="surah-time">00:00 / 00:00</span>
+            </div>
+            <div class="progress"><i id="surah-progress" style="width:0%;"></i></div>
+          </div>
+          <select id="reciter-select">
+            <option value="ar.alafasy">Mishary Alafasy</option>
+            <option value="ar.abdulbasitmurattal">Abdul Basit</option>
+            <option value="ar.husary">Al-Husary</option>
+            <option value="ar.minshawi">Al-Minshawi</option>
+          </select>
+          <audio id="surah-audio" preload="none"></audio>
+        </div>
+
         <div id="bismillah" style="text-align:center;font-family:var(--font-arabic);font-size:30px;color:var(--primary);margin:16px 0 30px;display:none;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
         <div id="ayah-container"></div>
       </div>
