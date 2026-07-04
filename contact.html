@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact &amp; FAQ | Noor Islam</title>
+<meta name="description" content="Contact the Noor Islam team, browse frequently asked questions, or send feedback.">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e4d3b">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="hero" style="padding:70px 0 50px;">
+  <div class="container text-center">
+    <span class="eyebrow" style="justify-content:center;color:var(--gold-300)">We'd Love to Hear From You</span>
+    <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px);">Contact Us</h1>
+  </div>
+</section>
+
+<section class="section" style="padding-top:30px;">
+  <div class="container grid grid-2" style="align-items:flex-start;">
+    <div class="card reveal">
+      <h3>Send a Message</h3>
+      <form id="contact-form">
+        <div class="field"><label>Full name</label><input type="text" required></div>
+        <div class="field"><label>Email address</label><input type="email" required></div>
+        <div class="field"><label>Subject</label>
+          <select>
+            <option>General inquiry</option><option>Technical issue</option><option>Content correction</option><option>Partnership</option>
+          </select>
+        </div>
+        <div class="field"><label>Message</label><textarea rows="5" required></textarea></div>
+        <button class="btn btn-primary btn-block" type="submit">Send Message</button>
+      </form>
+    </div>
+    <div>
+      <div class="card reveal" style="margin-bottom:24px;">
+        <h4>Email Support</h4>
+        <p>📧 support@noorislam.example<br>Response time: within 1–2 business days.</p>
+      </div>
+      <div class="card reveal" style="margin-bottom:24px;">
+        <h4>Send Feedback</h4>
+        <p style="font-size:14px;">Tell us what you love, or what we should improve.</p>
+        <div class="flex gap-8" id="feedback-emoji" style="font-size:26px;margin-bottom:12px;">
+          <button style="background:none;border:none;cursor:pointer;" data-v="😕">😕</button>
+          <button style="background:none;border:none;cursor:pointer;" data-v="🙂">🙂</button>
+          <button style="background:none;border:none;cursor:pointer;" data-v="😍">😍</button>
+        </div>
+        <textarea id="feedback-text" rows="3" placeholder="Optional comments…" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);"></textarea>
+        <button class="btn btn-outline btn-block btn-sm" id="feedback-submit" style="margin-top:10px;">Submit Feedback</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="faq">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow" style="justify-content:center">Help</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <div id="faq-list" style="max-width:760px;margin:0 auto;"></div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+<script src="js/contact.js"></script>
+</body>
+</html>

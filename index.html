@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor Islam — Qur'an, Hadith, Prayer Times & Daily Reminders</title>
+<meta name="description" content="Noor Islam is a complete digital home for Muslims worldwide: read the Qur'an, explore authentic Hadith, track prayer times, and grow daily in faith.">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0e4d3b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Amiri+Quran&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-arabic">نور الإسلام</div>
+    <h1 class="hero-title">A Light for Every Seeker of <span class="text-gold" style="color:var(--gold-300)">Guidance</span></h1>
+    <p class="hero-sub">Read the Qur'an, study authentic Hadith, track your prayer times, and carry a daily reminder with you — wherever you are in the world, Noor Islam welcomes you home.</p>
+    <div class="hero-cta">
+      <a href="quran.html" class="btn btn-gold">📖 Start Reading Qur'an</a>
+      <a href="prayer-times.html" class="btn btn-ghost" style="color:#fdf8ea;border-color:rgba(232,205,111,.35)">🕌 Find Prayer Times</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><b>114</b><span>Surahs</span></div>
+      <div class="hero-stat"><b>99</b><span>Names of Allah</span></div>
+      <div class="hero-stat"><b>5</b><span>Daily Prayers</span></div>
+      <div class="hero-stat"><b>24/7</b><span>Access, Anywhere</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- VERSE OF THE DAY + REMINDER -->
+<section class="section">
+  <div class="container grid grid-2">
+    <div class="card reveal" style="position:relative;overflow:hidden;">
+      <span class="eyebrow">Verse of the Day</span>
+      <p id="verse-ar" style="font-family:var(--font-arabic);font-size:28px;color:var(--primary);line-height:2;margin-bottom:16px;direction:rtl;"></p>
+      <p id="verse-en" style="color:var(--text);font-size:16px;"></p>
+      <p id="verse-ur" style="direction:rtl;font-size:15px;"></p>
+      <span class="chip chip-gold" id="verse-ref"></span>
+      <div class="flex gap-12" style="margin-top:18px;">
+        <button class="btn btn-outline btn-sm" id="verse-copy">Copy</button>
+        <a href="quran.html" class="btn btn-outline btn-sm">Open in Qur'an</a>
+      </div>
+    </div>
+    <div class="card reveal" style="background:linear-gradient(160deg,var(--emerald-900),var(--emerald-800));color:#fdf8ea;">
+      <span class="eyebrow" style="color:var(--gold-300)">Daily Reminder</span>
+      <h3 style="color:#fff;">Renew your intention today</h3>
+      <p id="daily-reminder" style="color:rgba(253,248,234,.85);"></p>
+      <p style="color:rgba(253,248,234,.6);font-size:13px;">"Actions are judged by intentions." — Bukhari 1</p>
+      <a href="tools.html" class="btn btn-gold btn-sm" style="margin-top:10px;">Morning &amp; Evening Adhkar</a>
+    </div>
+  </div>
+</section>
+
+<!-- PRAYER TIMES + CALENDAR -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow" style="justify-content:center">Today</span>
+      <h2 class="section-title">Prayer Times &amp; Islamic Date</h2>
+      <p>Times are calculated automatically for your detected location.</p>
+    </div>
+    <div class="grid grid-2" style="align-items:stretch;">
+      <div class="card reveal">
+        <div class="flex justify-between items-center" style="margin-bottom:18px;">
+          <h3 style="margin:0;">Today's Prayer Times</h3>
+          <span class="chip" id="home-location">Locating…</span>
+        </div>
+        <div id="home-prayer-grid" class="grid" style="grid-template-columns:repeat(5,1fr);gap:10px;"></div>
+        <p id="home-next-prayer" style="margin-top:16px;text-align:center;font-weight:700;color:var(--primary);"></p>
+        <a href="prayer-times.html" class="btn btn-primary btn-block" style="margin-top:10px;">Full Monthly Timetable &amp; Qibla</a>
+      </div>
+      <div class="card reveal">
+        <h3>Islamic Calendar</h3>
+        <div id="hijri-widget" style="text-align:center;padding:20px 0;">
+          <div class="star8 spin" style="margin:0 auto 14px;"></div>
+          <p style="font-size:24px;font-family:var(--font-display);color:var(--primary);margin-bottom:6px;" id="hijri-date">Loading…</p>
+          <p id="gregorian-date" style="color:var(--text-muted);"></p>
+        </div>
+        <div class="grid grid-2" style="gap:14px;">
+          <div class="glass" style="padding:16px;text-align:center;">
+            <span class="chip chip-gold">Ramadan 1448</span>
+            <p id="ramadan-countdown" style="font-weight:800;font-size:20px;margin:10px 0 0;color:var(--primary);"></p>
+          </div>
+          <div class="glass" style="padding:16px;text-align:center;">
+            <span class="chip chip-gold">Eid al-Fitr</span>
+            <p id="eid-countdown" style="font-weight:800;font-size:20px;margin:10px 0 0;color:var(--primary);"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="container">
+    <div class="divider-star"><span class="star8"></span></div>
+    <div class="section-head center">
+      <span class="eyebrow" style="justify-content:center">Explore</span>
+      <h2 class="section-title">Popular Categories</h2>
+    </div>
+    <div class="grid grid-4">
+      <a href="quran.html" class="card reveal text-center">
+        <div style="font-size:34px;">📖</div>
+        <h4>The Qur'an</h4>
+        <p style="font-size:14px;">114 Surahs with Arabic, Urdu &amp; English translation and audio.</p>
+      </a>
+      <a href="hadith.html" class="card reveal text-center">
+        <div style="font-size:34px;">🕋</div>
+        <h4>Hadith</h4>
+        <p style="font-size:14px;">Authentic narrations from Bukhari, Muslim, and more.</p>
+      </a>
+      <a href="prayer-times.html" class="card reveal text-center">
+        <div style="font-size:34px;">🕌</div>
+        <h4>Prayer Times</h4>
+        <p style="font-size:14px;">Accurate timings, Qibla direction, and monthly timetable.</p>
+      </a>
+      <a href="tools.html" class="card reveal text-center">
+        <div style="font-size:34px;">📿</div>
+        <h4>Islamic Tools</h4>
+        <p style="font-size:14px;">Tasbih counter, Zakat calculator, 99 Names &amp; Adhkar.</p>
+      </a>
+      <a href="library.html" class="card reveal text-center">
+        <div style="font-size:34px;">📚</div>
+        <h4>Library</h4>
+        <p style="font-size:14px;">Seerah, Tafsir, Fiqh, and history — curated for every reader.</p>
+      </a>
+      <a href="videos.html" class="card reveal text-center">
+        <div style="font-size:34px;">🎬</div>
+        <h4>Videos</h4>
+        <p style="font-size:14px;">Recitation, tafsir, nasheeds, and Islamic motivation.</p>
+      </a>
+      <a href="quiz.html" class="card reveal text-center">
+        <div style="font-size:34px;">🧠</div>
+        <h4>Islamic Quiz</h4>
+        <p style="font-size:14px;">Test your knowledge across three difficulty levels.</p>
+      </a>
+      <a href="community.html" class="card reveal text-center">
+        <div style="font-size:34px;">🤝</div>
+        <h4>Community</h4>
+        <p style="font-size:14px;">Ask questions, share reflections, and connect.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Stay Informed</span>
+      <h2 class="section-title">Latest Islamic News</h2>
+    </div>
+    <div class="grid grid-3" id="news-grid"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section">
+  <div class="container">
+    <div class="glass reveal" style="padding:60px 40px;text-align:center;background:linear-gradient(160deg,var(--emerald-900),var(--emerald-950));position:relative;overflow:hidden;">
+      <div class="pattern-bg"></div>
+      <h2 style="color:#fff;position:relative;">Begin your daily journey with the Qur'an today</h2>
+      <p style="color:rgba(253,248,234,.75);max-width:520px;margin:0 auto 26px;position:relative;">Bookmark verses, track your reading streak, and receive a fresh reminder every single day.</p>
+      <div class="flex gap-16 justify-between" style="justify-content:center;position:relative;">
+        <a href="quran.html" class="btn btn-gold">Read Now</a>
+        <a href="contact.html" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.3)">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="data/content.js"></script>
+<script src="js/main.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

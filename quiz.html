@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Islamic Quiz — Test Your Knowledge | Noor Islam</title>
+<meta name="description" content="Test your Islamic knowledge across easy, medium and hard multiple-choice quizzes with score tracking and a leaderboard.">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e4d3b">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="hero" style="padding:70px 0 50px;">
+  <div class="container text-center">
+    <span class="eyebrow" style="justify-content:center;color:var(--gold-300)">Test Yourself</span>
+    <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px);">Islamic Quiz</h1>
+    <p class="hero-sub">Choose a difficulty and see how well you know your deen.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:30px;">
+  <div class="container">
+    <div class="grid" style="grid-template-columns:1fr 320px;gap:30px;align-items:flex-start;">
+
+      <div class="card reveal" id="quiz-card">
+        <div id="quiz-setup" class="text-center">
+          <h3>Choose your difficulty</h3>
+          <div class="flex gap-16 justify-between" style="justify-content:center;flex-wrap:wrap;margin-top:20px;">
+            <button class="btn btn-outline" data-lvl="easy">🟢 Easy</button>
+            <button class="btn btn-outline" data-lvl="medium">🟡 Medium</button>
+            <button class="btn btn-outline" data-lvl="hard">🔴 Hard</button>
+          </div>
+        </div>
+
+        <div id="quiz-play" style="display:none;">
+          <div class="flex justify-between items-center" style="margin-bottom:16px;">
+            <span class="chip chip-gold" id="q-progress"></span>
+            <span class="chip" id="q-score">Score: 0</span>
+          </div>
+          <h3 id="q-text" style="min-height:60px;"></h3>
+          <div id="q-options" style="display:grid;gap:12px;"></div>
+          <button class="btn btn-primary" id="q-next" style="margin-top:20px;display:none;">Next Question →</button>
+        </div>
+
+        <div id="quiz-done" style="display:none;text-align:center;">
+          <div style="font-size:50px;">🏆</div>
+          <h3>Quiz Complete!</h3>
+          <p id="final-score" style="font-size:20px;font-weight:800;color:var(--primary);"></p>
+          <div class="field" style="max-width:280px;margin:14px auto;">
+            <input type="text" id="player-name" placeholder="Enter your name for the leaderboard">
+          </div>
+          <button class="btn btn-gold" id="save-score">Save to Leaderboard</button>
+          <button class="btn btn-outline" id="quiz-restart">Try Again</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <h4>🏅 Leaderboard</h4>
+        <ol id="leaderboard" style="padding-left:20px;font-size:14px;"></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="data/content.js"></script>
+<script src="js/main.js"></script>
+<script src="js/quiz.js"></script>
+</body>
+</html>

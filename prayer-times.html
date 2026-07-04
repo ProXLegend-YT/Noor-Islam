@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prayer Times &amp; Qibla Direction | Noor Islam</title>
+<meta name="description" content="Accurate, auto-detected prayer times for Fajr, Dhuhr, Asr, Maghrib and Isha, with countdown to the next prayer, a monthly timetable and a Qibla direction finder.">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e4d3b">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="hero" style="padding:70px 0 50px;">
+  <div class="container text-center">
+    <span class="eyebrow" style="justify-content:center;color:var(--gold-300)">Salah</span>
+    <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px);">Prayer Times</h1>
+    <p class="hero-sub" id="location-line">Detecting your location…</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:40px;">
+  <div class="container">
+
+    <!-- Countdown -->
+    <div class="glass reveal text-center" style="padding:40px;margin-bottom:40px;background:linear-gradient(160deg,var(--emerald-900),var(--emerald-950));color:#fdf8ea;position:relative;overflow:hidden;">
+      <div class="pattern-bg"></div>
+      <p style="color:var(--gold-300);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:13px;position:relative;">Next Prayer</p>
+      <h2 id="next-prayer-name" style="color:#fff;font-size:38px;position:relative;">—</h2>
+      <p id="next-prayer-countdown" style="font-size:22px;color:var(--gold-300);font-family:var(--font-display);position:relative;">--:--:--</p>
+    </div>
+
+    <div class="grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:50px;" id="today-grid"></div>
+
+    <div class="grid grid-2" style="align-items:flex-start;">
+      <!-- Monthly timetable -->
+      <div class="card reveal">
+        <h3>Monthly Timetable</h3>
+        <div style="overflow-x:auto;max-height:420px;overflow-y:auto;">
+          <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+            <thead style="position:sticky;top:0;background:var(--surface);">
+              <tr style="text-align:left;">
+                <th style="padding:8px;">Date</th><th>Fajr</th><th>Dhuhr</th><th>Asr</th><th>Maghrib</th><th>Isha</th>
+              </tr>
+            </thead>
+            <tbody id="month-table"><tr><td colspan="6" style="padding:20px;text-align:center;">Loading…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Qibla finder -->
+      <div class="card reveal text-center">
+        <h3>Qibla Direction Finder</h3>
+        <p style="font-size:14px;">Point the top of your phone forward and rotate slowly. The arrow marks the direction of the Ka'bah in Makkah.</p>
+        <div style="width:220px;height:220px;margin:20px auto;position:relative;border-radius:50%;border:3px solid var(--border);display:flex;align-items:center;justify-content:center;background:var(--bg-alt);">
+          <div id="qibla-arrow" style="font-size:60px;transition:transform .3s ease;color:var(--accent-strong);">↑</div>
+          <span style="position:absolute;top:8px;font-size:11px;color:var(--text-muted);">N</span>
+        </div>
+        <p id="qibla-degrees" style="font-weight:800;color:var(--primary);font-size:18px;">—°</p>
+        <button class="btn btn-outline btn-sm" id="enable-compass">Enable Compass</button>
+        <p style="font-size:12px;margin-top:10px;">On iOS, your browser may ask permission to use motion &amp; orientation sensors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+<script src="js/prayer.js"></script>
+</body>
+</html>

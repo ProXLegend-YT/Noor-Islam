@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — Discussion &amp; Islamic Q&amp;A | Noor Islam</title>
+<meta name="description" content="Join the Noor Islam community: ask questions, share reflections, and reply to fellow Muslims worldwide.">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0e4d3b">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<section class="hero" style="padding:70px 0 50px;">
+  <div class="container text-center">
+    <span class="eyebrow" style="justify-content:center;color:var(--gold-300)">Ummah</span>
+    <h1 class="hero-title" style="font-size:clamp(28px,4vw,44px);">Community &amp; Q&amp;A</h1>
+    <p class="hero-sub">Ask, share and reflect together. Be kind — this space represents the Ummah.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:30px;">
+  <div class="container">
+    <div class="grid" style="grid-template-columns:1fr 300px;gap:30px;align-items:flex-start;">
+
+      <div>
+        <!-- Profile / sign-in -->
+        <div class="card reveal" id="profile-card" style="margin-bottom:24px;"></div>
+
+        <!-- New post -->
+        <div class="card reveal" style="margin-bottom:30px;">
+          <h4>Start a discussion</h4>
+          <div class="field"><input type="text" id="post-title" placeholder="Title — e.g. How do I keep consistency in Tahajjud?"></div>
+          <div class="field"><textarea id="post-body" rows="3" placeholder="Share more detail…"></textarea></div>
+          <div class="flex justify-between items-center">
+            <select id="post-cat" style="padding:10px 14px;border-radius:100px;border:1px solid var(--border);background:var(--surface);">
+              <option>General Discussion</option><option>Islamic Q&amp;A</option><option>Reflections</option><option>Announcements</option>
+            </select>
+            <button class="btn btn-primary" id="post-submit">Post</button>
+          </div>
+        </div>
+
+        <div class="filter-row" id="forum-filters"></div>
+        <div id="thread-list"></div>
+      </div>
+
+      <aside class="card reveal">
+        <h4>Community Guidelines</h4>
+        <ul style="font-size:13.5px;color:var(--text-muted);line-height:1.8;list-style:disc;padding-left:18px;">
+          <li>Speak with kindness and good manners (adab).</li>
+          <li>No personal attacks, hate speech or spam.</li>
+          <li>Cite sources when answering fiqh questions.</li>
+          <li>Report content that breaks these guidelines.</li>
+        </ul>
+        <button class="btn btn-outline btn-block btn-sm" onclick="toast('Report received — a moderator will review this content.')">🚩 Report content</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+<script src="js/main.js"></script>
+<script src="js/community.js"></script>
+</body>
+</html>

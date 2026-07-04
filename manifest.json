@@ -1,0 +1,12 @@
+{
+  "name": "Noor Islam",
+  "short_name": "Noor Islam",
+  "description": "Qur'an, Hadith, prayer times and daily Islamic reminders.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#062821",
+  "theme_color": "#0e4d3b",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
