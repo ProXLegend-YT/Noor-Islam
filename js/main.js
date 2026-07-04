@@ -11,8 +11,35 @@ const NAV_LINKS = [
   {href:"tools.html",label:"Tools"},
   {href:"quiz.html",label:"Quiz"},
   {href:"community.html",label:"Community"},
+  {href:"dashboard.html",label:"Dashboard"},
   {href:"donate.html",label:"Donate"},
   {href:"contact.html",label:"Contact"},
+];
+
+const ADHAN_URL = "https://cdn.aladhan.com/audio/adhans/a9.mp3"; // Mishary Rashid Alafasy, via aladhan.com (same provider as the prayer times API)
+
+// Compact surah index for site-wide quick search (kept small and inline so every page can search without loading the full dataset)
+const QUICK_SURAHS = [
+  [1,"Al-Fatihah","The Opener"],[2,"Al-Baqarah","The Cow"],[3,"Aal-E-Imran","The Family of Imran"],
+  [4,"An-Nisa","The Women"],[5,"Al-Ma'idah","The Table Spread"],[18,"Al-Kahf","The Cave"],
+  [19,"Maryam","Mary"],[36,"Ya-Sin","Ya Sin"],[55,"Ar-Rahman","The Beneficent"],
+  [56,"Al-Waqi'ah","The Inevitable"],[67,"Al-Mulk","The Sovereignty"],[112,"Al-Ikhlas","The Sincerity"],
+  [113,"Al-Falaq","The Daybreak"],[114,"An-Nas","Mankind"]
+];
+const QUICK_LINKS = [
+  {t:"Home", d:"Homepage & daily overview", href:"index.html"},
+  {t:"Read Qur'an", d:"114 Surahs, translations & audio", href:"quran.html"},
+  {t:"Prayer Times", d:"Timings, Qibla & Mosque Finder", href:"prayer-times.html"},
+  {t:"Hadith Collection", d:"Bukhari, Muslim & more", href:"hadith.html"},
+  {t:"Islamic Library", d:"Books on Seerah, Fiqh & Tafsir", href:"library.html"},
+  {t:"Islamic Videos", d:"Recitation, Tafsir, Naats & Nasheeds", href:"videos.html"},
+  {t:"Mini Games", d:"Memory match & word scramble", href:"games.html"},
+  {t:"Islamic Tools", d:"Tasbih, Zakat, 99 Names, Events", href:"tools.html"},
+  {t:"Quiz", d:"Test your Islamic knowledge", href:"quiz.html"},
+  {t:"Community", d:"Discussions & Islamic Q&A", href:"community.html"},
+  {t:"Dashboard", d:"Your streak, bookmarks & badges", href:"dashboard.html"},
+  {t:"Donate", d:"Support mosque & charity projects", href:"donate.html"},
+  {t:"Contact", d:"Get in touch & FAQ", href:"contact.html"},
 ];
 
 function currentPage(){
@@ -32,6 +59,7 @@ function renderHeader(){
         ${NAV_LINKS.map(l=>`<a href="${l.href}" class="${l.href===cur?'active':''}">${l.label}</a>`).join("")}
       </nav>
       <div class="nav-actions">
+        <button class="icon-btn" id="search-open" aria-label="Search Noor Islam" title="Quick search">🔍</button>
         <span id="streak-badge-slot"></span>
         <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
         <a href="community.html" class="btn btn-gold btn-sm" style="display:none" id="login-cta">Sign in</a>
@@ -184,7 +212,7 @@ function renderStreakBadge(){
   const mount = document.getElementById("streak-badge-slot");
   if(!mount) return;
   const s = updateStreak();
-  mount.innerHTML = `<span class="streak-badge" title="Daily streak">🔥 <b>${s.count}</b></span>`;
+  mount.innerHTML = `<a href="dashboard.html" class="streak-badge" title="View your dashboard">🔥 <b>${s.count}</b></a>`;
 }
 
 /* ---------- Notifications for prayer times ---------- */
@@ -198,6 +226,7 @@ async function requestNotifyPermission(){
 function scheduleNotification(title, body, delayMs){
   if(delayMs <= 0 || delayMs > 24*3600*1000) return;
   setTimeout(()=>{
+    playAdhan();
     if(Notification.permission === "granted"){
       if(navigator.serviceWorker?.controller){
         navigator.serviceWorker.ready.then(reg => reg.showNotification(title, {body, icon:"icons/icon.svg", badge:"icons/icon.svg"}));
@@ -257,6 +286,89 @@ function initHeroParticles(){
   });
 }
 
+/* ---------- Adhan audio ---------- */
+let adhanAudioEl = null;
+function playAdhan(){
+  if(localStorage.getItem("noor-adhan") !== "on") return;
+  if(!adhanAudioEl) adhanAudioEl = new Audio(ADHAN_URL);
+  adhanAudioEl.currentTime = 0;
+  adhanAudioEl.play().catch(()=>{});
+}
+
+/* ---------- Quick Search (site-wide command palette) ---------- */
+function renderSearchModal(){
+  if(document.getElementById("search-overlay")) return;
+  const overlay = document.createElement("div");
+  overlay.id = "search-overlay";
+  overlay.className = "search-overlay";
+  overlay.innerHTML = `
+    <div class="search-modal">
+      <div class="search-bar" style="margin-bottom:0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="quick-search-input" placeholder="Search pages, Surahs…" autocomplete="off">
+      </div>
+      <div id="quick-search-results"></div>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  const input = document.getElementById("quick-search-input");
+  const results = document.getElementById("quick-search-results");
+
+  function renderResults(q){
+    q = q.trim().toLowerCase();
+    const pages = QUICK_LINKS.filter(p => !q || p.t.toLowerCase().includes(q) || p.d.toLowerCase().includes(q));
+    const surahs = QUICK_SURAHS.filter(([n,t,m]) => q && (t.toLowerCase().includes(q) || m.toLowerCase().includes(q) || String(n)===q));
+    let html = "";
+    if(surahs.length){
+      html += `<div class="qs-group">Surahs</div>` + surahs.map(([n,t,m])=>
+        `<a class="qs-item" href="quran.html?surah=${n}"><span class="chip">${n}</span><div><b>${t}</b><br><small>${m}</small></div></a>`).join("");
+    }
+    html += `<div class="qs-group">Pages</div>` + (pages.length ? pages.map(p=>
+      `<a class="qs-item" href="${p.href}"><span style="font-size:20px;">→</span><div><b>${p.t}</b><br><small>${p.d}</small></div></a>`).join("")
+      : `<p style="padding:14px;color:var(--text-muted);font-size:13.5px;">No matching pages.</p>`);
+    results.innerHTML = html;
+  }
+  renderResults("");
+  input.addEventListener("input", ()=> renderResults(input.value));
+
+  overlay.addEventListener("click", (e)=>{ if(e.target === overlay) closeSearch(); });
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape") closeSearch();
+    if((e.ctrlKey || e.metaKey) && e.key === "k"){ e.preventDefault(); openSearch(); }
+  });
+}
+function openSearch(){
+  renderSearchModal();
+  document.getElementById("search-overlay").classList.add("open");
+  setTimeout(()=> document.getElementById("quick-search-input")?.focus(), 50);
+}
+function closeSearch(){
+  document.getElementById("search-overlay")?.classList.remove("open");
+}
+
+/* ---------- Install App prompt ---------- */
+let deferredInstallPrompt = null;
+window.addEventListener("beforeinstallprompt", (e)=>{
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if(localStorage.getItem("noor-install-dismissed") === "1") return;
+  const btn = document.createElement("button");
+  btn.id = "install-prompt-btn";
+  btn.className = "install-fab";
+  btn.innerHTML = "⬇ Install App";
+  btn.addEventListener("click", async ()=>{
+    btn.remove();
+    if(deferredInstallPrompt){ deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; }
+  });
+  document.body.appendChild(btn);
+  setTimeout(()=>{
+    if(document.getElementById("install-prompt-btn")){
+      document.getElementById("install-prompt-btn").remove();
+      localStorage.setItem("noor-install-dismissed","1");
+    }
+  }, 15000);
+});
+
 document.addEventListener("DOMContentLoaded", ()=>{
   renderHeader();
   renderFooter();
@@ -267,4 +379,5 @@ document.addEventListener("DOMContentLoaded", ()=>{
   renderStreakBadge();
   renderBottomNav();
   initHeroParticles();
+  document.getElementById("search-open")?.addEventListener("click", openSearch);
 });

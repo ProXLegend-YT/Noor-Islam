@@ -61,6 +61,21 @@
   }
 
   // ---- Notifications ----
+  const adhanBtn = document.getElementById("adhan-toggle");
+  function paintAdhanBtn(){
+    adhanBtn.textContent = localStorage.getItem("noor-adhan") === "on" ? "✓ Adhan Sound On" : "Enable Adhan Sound";
+  }
+  paintAdhanBtn();
+  adhanBtn.addEventListener("click", ()=>{
+    const on = localStorage.getItem("noor-adhan") === "on";
+    localStorage.setItem("noor-adhan", on ? "off" : "on");
+    paintAdhanBtn();
+    toast(on ? "Adhan sound turned off" : "Adhan sound enabled");
+  });
+  document.getElementById("adhan-preview").addEventListener("click", ()=>{
+    new Audio(ADHAN_URL).play().catch(()=> toast("Couldn't play audio preview"));
+  });
+
   const notifyBtn = document.getElementById("notify-toggle");
   function paintNotifyBtn(){
     const on = notificationsEnabled() && (typeof Notification !== "undefined") && Notification.permission === "granted";
