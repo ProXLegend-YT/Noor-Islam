@@ -25,6 +25,13 @@
 <section class="section" style="padding-top:40px;">
   <div class="container">
 
+    <!-- Notification opt-in -->
+    <div class="notify-banner reveal" id="notify-banner">
+      <span style="font-size:26px;">🔔</span>
+      <p>Get a browser notification the moment each prayer time begins, while Noor Islam is open on your device.</p>
+      <button class="btn btn-gold btn-sm" id="notify-toggle">Enable Notifications</button>
+    </div>
+
     <!-- Countdown -->
     <div class="glass reveal text-center" style="padding:40px;margin-bottom:40px;background:linear-gradient(160deg,var(--emerald-900),var(--emerald-950));color:#fdf8ea;position:relative;overflow:hidden;">
       <div class="pattern-bg"></div>
@@ -34,6 +41,14 @@
     </div>
 
     <div class="grid" style="grid-template-columns:repeat(5,1fr);margin-bottom:50px;" id="today-grid"></div>
+
+    <div class="grid grid-2" style="align-items:flex-start;margin-top:30px;">
+      <div class="card reveal text-center">
+        <h3>🕌 Mosque Finder</h3>
+        <p style="font-size:14px;">Find mosques near your current location.</p>
+        <button class="btn btn-primary btn-block" id="find-mosques">Find Nearby Mosques</button>
+      </div>
+    </div>
 
     <div class="grid grid-2" style="align-items:flex-start;">
       <!-- Monthly timetable -->
